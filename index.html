@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atelier Rénov’Maison | Rénovation de maison</title>
+    <meta
+      name="description"
+      content="Atelier Rénov’Maison accompagne vos projets de rénovation intérieure et extérieure avec des artisans qualifiés."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <a href="#" class="logo" data-i18n="brand">Atelier Rénov’Maison</a>
+        <div class="language-switcher">
+          <label for="language" class="sr-only" data-i18n="languageLabel">Choisir la langue</label>
+          <select id="language" aria-label="Choisir la langue">
+            <option value="fr">Français</option>
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="ar">العربية</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <p class="eyebrow" data-i18n="heroEyebrow">Votre partenaire travaux</p>
+            <h1 data-i18n="heroTitle">Redonnez vie à votre maison</h1>
+            <p class="hero-text" data-i18n="heroDescription">
+              De la cuisine au toit, notre atelier vous accompagne avec des solutions sur-mesure,
+              transparentes et durables.
+            </p>
+            <a href="#contact" class="button" data-i18n="heroCta">Demander un devis gratuit</a>
+          </div>
+          <div class="hero-card">
+            <h2 data-i18n="cardTitle">Pourquoi nous choisir ?</h2>
+            <ul>
+              <li data-i18n="benefit1">+10 ans d’expérience en rénovation</li>
+              <li data-i18n="benefit2">Équipe certifiée et assurée</li>
+              <li data-i18n="benefit3">Délais respectés et budget maîtrisé</li>
+              <li data-i18n="benefit4">Accompagnement de A à Z</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="services container" id="services">
+        <h2 data-i18n="servicesTitle">Nos services</h2>
+        <div class="cards">
+          <article class="card">
+            <h3 data-i18n="service1Title">Rénovation intérieure</h3>
+            <p data-i18n="service1Desc">Cuisine, salle de bain, peinture, revêtements de sol et optimisation des espaces.</p>
+          </article>
+          <article class="card">
+            <h3 data-i18n="service2Title">Rénovation extérieure</h3>
+            <p data-i18n="service2Desc">Façades, isolation, terrasse, toiture et amélioration énergétique globale.</p>
+          </article>
+          <article class="card">
+            <h3 data-i18n="service3Title">Suivi de chantier</h3>
+            <p data-i18n="service3Desc">Planification claire, suivi hebdomadaire et interlocuteur unique pour vos travaux.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="contact" id="contact">
+        <div class="container contact-grid">
+          <div>
+            <h2 data-i18n="contactTitle">Parlons de votre projet</h2>
+            <p data-i18n="contactDesc">Recevez une estimation sous 48h et des conseils personnalisés pour votre rénovation.</p>
+          </div>
+          <form class="contact-form">
+            <label>
+              <span data-i18n="formName">Nom complet</span>
+              <input type="text" placeholder="Jean Dupont" />
+            </label>
+            <label>
+              <span data-i18n="formPhone">Téléphone</span>
+              <input type="tel" placeholder="06 12 34 56 78" />
+            </label>
+            <label>
+              <span data-i18n="formMessage">Votre besoin</span>
+              <textarea rows="4" data-i18n-placeholder="formMessagePlaceholder" placeholder="Décrivez votre projet..."></textarea>
+            </label>
+            <button type="button" data-i18n="formButton">Envoyer ma demande</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p data-i18n="footer">© 2026 Atelier Rénov’Maison — Rénovation de maison en France</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

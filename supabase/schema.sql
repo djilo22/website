@@ -78,6 +78,11 @@ ALTER TABLE agencies ENABLE ROW LEVEL SECURITY;
 ALTER TABLE properties ENABLE ROW LEVEL SECURITY;
 ALTER TABLE subscriptions ENABLE ROW LEVEL SECURITY;
 
+-- Agencies: public can view basic agency info (name, phone, email) for property contact
+CREATE POLICY "Anyone can view agency public info"
+  ON agencies FOR SELECT
+  USING (true);
+
 -- Agencies: owners can manage their own agency
 CREATE POLICY "Users can view own agency"
   ON agencies FOR SELECT
@@ -170,17 +175,22 @@ CREATE TRIGGER on_auth_user_created
 -- =============================================
 -- 7. Storage bucket for property images
 -- =============================================
--- Run this in Supabase SQL editor:
--- INSERT INTO storage.buckets (id, name, public) VALUES ('property-images', 'property-images', true);
--- 
--- CREATE POLICY "Anyone can view property images"
---   ON storage.objects FOR SELECT
---   USING (bucket_id = 'property-images');
---
--- CREATE POLICY "Authenticated users can upload images"
---   ON storage.objects FOR INSERT
---   WITH CHECK (bucket_id = 'property-images' AND auth.role() = 'authenticated');
---
--- CREATE POLICY "Users can delete own images"
---   ON storage.objects FOR DELETE
---   USING (bucket_id = 'property-images' AND auth.uid()::TEXT = (storage.foldername(name))[1]);
+-- IMPORTANT: Run these commands in the Supabase SQL Editor to enable image uploads.
+-- They cannot be run in the initial schema migration because storage tables
+-- may not be available yet.
+
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('property-images', 'property-images', true)
+ON CONFLICT (id) DO NOTHING;
+
+CREATE POLICY "Anyone can view property images"
+  ON storage.objects FOR SELECT
+  USING (bucket_id = 'property-images');
+
+CREATE POLICY "Authenticated users can upload images"
+  ON storage.objects FOR INSERT
+  WITH CHECK (bucket_id = 'property-images' AND auth.role() = 'authenticated');
+
+CREATE POLICY "Users can delete own images"
+  ON storage.objects FOR DELETE
+  USING (bucket_id = 'property-images' AND auth.uid()::TEXT = (storage.foldername(name))[1]);

@@ -47,20 +47,29 @@ export function PropertyForm({ property, agencyId }: PropertyFormProps) {
     const files = e.target.files;
     if (!files || files.length === 0) return;
     setUploading(true);
+    setError("");
     try {
       const newUrls: string[] = [];
+      const failedFiles: string[] = [];
       for (const file of Array.from(files)) {
         const fileExt = file.name.split(".").pop();
         const fileName = `${agencyId}/${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
         const { error: uploadError } = await supabase.storage.from("property-images").upload(fileName, file);
-        if (uploadError) { console.error("Upload error:", uploadError); continue; }
+        if (uploadError) {
+          console.error("Upload error:", uploadError);
+          failedFiles.push(file.name);
+          continue;
+        }
         const { data } = supabase.storage.from("property-images").getPublicUrl(fileName);
         newUrls.push(data.publicUrl);
       }
       setImageUrls((prev) => [...prev, ...newUrls]);
+      if (failedFiles.length > 0) {
+        setError(`فشل رفع الصور التالية: ${failedFiles.join("، ")}. تأكد من إنشاء bucket باسم "property-images" في Supabase Storage.`);
+      }
     } catch (err) {
       console.error("Upload error:", err);
-      setError("فشل رفع الصور. حاول مرة أخرى.");
+      setError("فشل رفع الصور. تأكد من إعداد Supabase Storage بشكل صحيح.");
     } finally { setUploading(false); }
   };
 

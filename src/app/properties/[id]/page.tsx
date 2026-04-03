@@ -10,7 +10,7 @@ import { MapPin, Maximize, BedDouble, Bath, Phone, Mail, Building, ArrowRight } 
 
 import Link from "next/link";
 import { formatPrice, getPropertyTypeLabel, formatDate } from "@/lib/utils";
-import type { Property } from "@/types";
+import type { Property, Agency } from "@/types";
 
 export const dynamic = "force-dynamic";
 
@@ -33,6 +33,17 @@ export default async function PropertyDetailPage({
   if (!property) notFound();
 
   const p = property as Property;
+
+  // Fetch agency contact info
+  const { data: agency } = await supabase
+    .from("agencies")
+    .select("name, phone, email")
+    .eq("id", p.agency_id)
+    .single();
+
+  const agencyPhone = agency?.phone || "";
+  const agencyEmail = agency?.email || "";
+  const agencyName = agency?.name || "الوكالة";
 
   return (
     <>
@@ -125,20 +136,27 @@ export default async function PropertyDetailPage({
             <div>
               <Card className="sticky top-24">
                 <CardContent>
-                  <h3 className="text-lg font-semibold text-text mb-4">تواصل مع الوكالة</h3>
+                  <h3 className="text-lg font-semibold text-text mb-4">تواصل مع {agencyName}</h3>
                   <div className="space-y-3">
-                    <a href="tel:+213555123456">
-                      <Button variant="primary" className="w-full">
-                        <Phone className="w-4 h-4 ml-2" />
-                        اتصل الآن
-                      </Button>
-                    </a>
-                    <a href="mailto:contact@agency.dz">
-                      <Button variant="outline" className="w-full">
-                        <Mail className="w-4 h-4 ml-2" />
-                        أرسل بريد
-                      </Button>
-                    </a>
+                    {agencyPhone && (
+                      <a href={`tel:${agencyPhone}`}>
+                        <Button variant="primary" className="w-full">
+                          <Phone className="w-4 h-4 ml-2" />
+                          اتصل الآن
+                        </Button>
+                      </a>
+                    )}
+                    {agencyEmail && (
+                      <a href={`mailto:${agencyEmail}`}>
+                        <Button variant="outline" className="w-full">
+                          <Mail className="w-4 h-4 ml-2" />
+                          أرسل بريد
+                        </Button>
+                      </a>
+                    )}
+                    {!agencyPhone && !agencyEmail && (
+                      <p className="text-text-light text-sm text-center">لا توجد معلومات اتصال متاحة</p>
+                    )}
                   </div>
                 </CardContent>
               </Card>

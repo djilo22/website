@@ -46,7 +46,7 @@ export function DashboardSidebar() {
             const isActive =
               item.href === "/dashboard"
                 ? pathname === "/dashboard"
-                : pathname.startsWith(item.href);
+                : pathname === item.href || (pathname.startsWith(item.href + "/") && !navItems.some(other => other.href !== item.href && other.href.startsWith(item.href) && pathname.startsWith(other.href)));
             return (
               <Link
                 key={item.href}

@@ -78,6 +78,11 @@ ALTER TABLE agencies ENABLE ROW LEVEL SECURITY;
 ALTER TABLE properties ENABLE ROW LEVEL SECURITY;
 ALTER TABLE subscriptions ENABLE ROW LEVEL SECURITY;
 
+-- Agencies: public can view basic agency info (name, phone, email) for property contact
+CREATE POLICY "Anyone can view agency public info"
+  ON agencies FOR SELECT
+  USING (true);
+
 -- Agencies: owners can manage their own agency
 CREATE POLICY "Users can view own agency"
   ON agencies FOR SELECT

@@ -22,6 +22,7 @@ export default async function EditPropertyPage({
     .from("properties")
     .select("*")
     .eq("id", id)
+    .eq("agency_id", agencyId)
     .single();
 
   if (!property) notFound();
